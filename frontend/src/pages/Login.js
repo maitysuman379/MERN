@@ -2,9 +2,13 @@ import { useState } from 'react';
 import loginIcon from '../assest/signin.gif';
 import { FaEye } from "react-icons/fa"; 
 import { FaEyeSlash } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const handelOnClick = () =>{
+    setShowPassword(!showPassword);
+  }
   return (
     <>
       <section id="login">
@@ -15,7 +19,7 @@ const Login = () => {
                     <img src={loginIcon} alt="login icon" />
                 </div>
 
-                <form action="">
+                <form className='pt-6'>
 
                     <div className=''>
                        <label htmlFor="Email">Email : </label>
@@ -28,16 +32,17 @@ const Login = () => {
                        <label htmlFor="Password">Password : </label>
                        <div className='bg-slate-200 p-2 flex' >
                            <input type={ showPassword ? 'text' : 'password'} placeholder='******' name='Password' className='w-full h-full outline-none bg-transparent'/>
-                           <div className='cursor-pointer'>
+                           <div className='cursor-pointer text-lg' onClick={handelOnClick}>
                             <span>
-                              <FaEye />
+                              { showPassword ? <FaEye style={{color: "red"}}/> : <FaEyeSlash /> }
                             </span>
                            </div>
                        </div>
+                       <Link to={'/forgot-password'} className='block w-fit ml-auto hover:underline hover:text-red-600'>Forgot Password?</Link>
                     </div>
-
+                    <button className='bg-red-600 text-white px-6 py-1 w-full mt-4   max-w-[150px] rounded-full hover:bg-red-900 hover:scale-105 transition-all mx-auto block' >login</button>
                 </form>
-
+                <p className='my-4'>Don't Have Accout ? <Link to={"/sign-up"}> <span className='hover:text-red-600 hover:underline'>Create Account / Sign Up</span> </Link></p>
             </div>
         </div>
       </section>

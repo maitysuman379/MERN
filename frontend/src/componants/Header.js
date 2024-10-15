@@ -1,5 +1,5 @@
 import React from 'react'
-import Logo from './Logo'
+import Logo from '../assest/suman.png'
 import { IoSearch } from "react-icons/io5";
 import { FaUser } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
@@ -12,12 +12,12 @@ function Header() {
 
         <div className="ml-2">
           <Link to={"/"}>
-            <Logo w={90} h={50}/>
+          <img src={Logo} alt="" className='h-12 w-15'/>
           </Link>
         </div>
 
         <div className='hidden lg:flex items-center w-full justify-between max-w-sm border rounded-full focus-within:shadow-md pl-2'>
-          <input type="text" placeholder='Search Product here...' className='w-full outline-none'/>
+          <input type="text" placeholder='Search Product here...' className='w-full outline-none' name='products'/>
           <div className='text-lg min-w-[50px] h-8 bg-red-600 flex items-center justify-center rounded-r-full text-white'><IoSearch /></div>
         </div>
 

@@ -6,6 +6,7 @@ import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import imageTobase64 from '../helpers/imageTobase64';
 import { FaCheckCircle } from "react-icons/fa";
+import { FaCircleXmark } from "react-icons/fa6";
 
 
 function SignUp() {
@@ -161,7 +162,7 @@ function SignUp() {
                 </div>
               </div>
             </div>
-            {checkPassword ? <p className='flex items-center justify-center' style={{color: "green"}}>Correct Password <FaCheckCircle /></p> : <p>Password iNot Correct</p>}
+            {checkPassword ? <p className='flex items-center justify-center' style={{color: "green"}}>Correct Password &nbsp;<FaCheckCircle /></p> : <p className='flex items-center justify-center' style={{color: "red"}}>Confirm Password Not Correct &nbsp; <FaCircleXmark /></p>}
             <button type='submit' className="bg-red-600 text-white px-6 py-1 w-full mt-4   max-w-[150px] rounded-full hover:bg-red-900 hover:scale-105 transition-all mx-auto block">
               Sign-Up
             </button>

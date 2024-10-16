@@ -21,7 +21,9 @@ const Login = () => {
     })
   };
 
-  console.log(data)
+  const handelOnSubmit = (event) =>{
+    event.preventDefault();
+  }
 
   const handelOnClick = () => {
     setShowPassword(!showPassword);
@@ -35,7 +37,7 @@ const Login = () => {
               <img src={loginIcon} alt="login icon" />
             </div>
 
-            <form className="pt-6">
+            <form className="pt-6" onSubmit={handelOnSubmit}>
               <div className="">
                 <label htmlFor="email">Email : </label>
                 <div className="bg-slate-200 p-2">

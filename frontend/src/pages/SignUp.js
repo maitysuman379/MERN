@@ -4,26 +4,51 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
+import imageTobase64 from '../helpers/imageTobase64';
+import { FaCheckCircle } from "react-icons/fa";
+
 
 function SignUp() {
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const [data, setData] = useState({
+    name: '',
     email: '',
     password: '',
+    confirmPassword: '',
+    profilePic: '',
   });
+
+  const handelUplodePic = async(event) =>{
+    const file = event.target.files[0];
+    const imagePic = await imageTobase64(file);
+    setData((preve)=>{
+      return {
+        ...preve,
+        profilePic : imagePic
+      }
+    })
+    console.log(imagePic);
+  }
 
   const handleOnChange = (event) => {
     const { name, value } = event.target;
     setData((currVal)=>{
       return{
         ...currVal,
-        [name] : value
+        [name] : value,
       }
     })
   };
 
+  const [checkPassword, setCheckPassword] = useState(true)
+
   const handelOnSubmit = (event) =>{
+    const p1 = event.target[2].value;
+    const p2 = event.target[3].value;
+    setCheckPassword(p1===p2);
     event.preventDefault();
   }
 
@@ -34,16 +59,25 @@ function SignUp() {
   const handelOnClickShowConfirmPassword = () =>{
     setShowConfirmPassword(!showConfirmPassword);
   }
+
   return (
     <>
     <section id="signup">
       <div className="mx-auto container p-4">
         <div className="bg-white py-5 p-2 w-full max-w-md mx-auto rounded-md">
-          <div className="w-20 h-20 mx-auto">
-            <img src={loginIcon} alt="login icon" />
+          <div className="w-20 h-20 mx-auto relative overflow-hidden rounded-full">
+            <div>
+              <img src={data.profilePic ? data.profilePic : loginIcon} alt="login-icon" />
+            </div>
+            <form action="" >
+              <label>
+                <div className='bg-opacity-75 cursor-pointer text-xs bg-slate-200 py-2 text-center absolute bottom-0 w-full' style={{fontSize: "0.6rem"}}>Uplode Photo</div>
+                <input type="file" className='hidden' onChange={handelUplodePic} required/>
+              </label>
+            </form>
           </div>
 
-          <form className="pt-6" onSubmit={handelOnSubmit}>
+          <form className="pt-6 flex flex-col gap-2" onSubmit={handelOnSubmit}>
           <div className="grid">
               <label htmlFor="name">Name : </label>
               <div className="bg-slate-200 p-2">
@@ -52,6 +86,7 @@ function SignUp() {
                   placeholder="Suman Maity"
                   name="name"
                   value={data.name}
+                  required
                   onChange={handleOnChange}
                   className="w-full h-full outline-none bg-transparent"
                 />
@@ -66,6 +101,7 @@ function SignUp() {
                   placeholder="abc123@gmail.com"
                   name="email"
                   value={data.email}
+                  required
                   onChange={handleOnChange}
                   className="w-full h-full outline-none bg-transparent"
                 />
@@ -79,6 +115,7 @@ function SignUp() {
                   type={showPassword ? "text" : "password"}
                   placeholder="******"
                   name="password"
+                  required
                   onChange={handleOnChange}
                   value={data.password}
                   className="w-full h-full outline-none bg-transparent"
@@ -102,11 +139,12 @@ function SignUp() {
               <label htmlFor="password">Confirm Password : </label>
               <div className="bg-slate-200 p-2 flex">
                 <input
-                  type={showPassword ? "text" : "password"}
+                  type={showConfirmPassword ? "text" : "password"}
                   placeholder="******"
-                  name="password"
+                  name="confirmPassword"
                   onChange={handleOnChange}
-                  value={data.password}
+                  required
+                  value={data.confirmPassword}
                   className="w-full h-full outline-none bg-transparent"
                 />
                 <div
@@ -123,17 +161,17 @@ function SignUp() {
                 </div>
               </div>
             </div>
-
-            <button className="bg-red-600 text-white px-6 py-1 w-full mt-4   max-w-[150px] rounded-full hover:bg-red-900 hover:scale-105 transition-all mx-auto block">
-              login
+            {checkPassword ? <p className='flex items-center justify-center' style={{color: "green"}}>Correct Password <FaCheckCircle /></p> : <p>Password iNot Correct</p>}
+            <button type='submit' className="bg-red-600 text-white px-6 py-1 w-full mt-4   max-w-[150px] rounded-full hover:bg-red-900 hover:scale-105 transition-all mx-auto block">
+              Sign-Up
             </button>
           </form>
           <p className="my-4">
-            Don't Have Accout ?{" "}
-            <Link to={"/sign-up"}>
+            Already Have Accout ?{" "}
+            <Link to={"/login"}>
               {" "}
               <span className="hover:text-red-600 hover:underline">
-                Create Account / Sign Up
+                login
               </span>{" "}
             </Link>
           </p>

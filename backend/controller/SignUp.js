@@ -6,6 +6,11 @@ async function userSignUpController(req,res){
     try{
         const { name, email, password } = req.body;
 
+        const user = await User.findOne({email})
+        if(user){
+            throw new Error("Already user Exist")
+        }
+
         console.log(req.body);
 
         if(!email){
@@ -42,7 +47,7 @@ async function userSignUpController(req,res){
         
     }catch(err){
         res.json({
-            message : err,
+            message : err.message || err,
             error : true,
             success : false,
         })

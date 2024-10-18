@@ -5,4 +5,3 @@ const userSignUpController = require("../controller/SignUp");
 router.post("/signup",userSignUpController);
 
 module.exports = router;
-

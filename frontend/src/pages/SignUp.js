@@ -7,6 +7,7 @@ import { FaEyeSlash } from "react-icons/fa";
 import imageTobase64 from '../helpers/imageTobase64';
 import { FaCheckCircle } from "react-icons/fa";
 import { FaCircleXmark } from "react-icons/fa6";
+import SummaryApi from '../common';
 
 
 function SignUp() {
@@ -46,11 +47,26 @@ function SignUp() {
 
   const [checkPassword, setCheckPassword] = useState(true)
 
-  const handelOnSubmit = (event) =>{
+  const handelOnSubmit = async(event) =>{
     const p1 = event.target[2].value;
     const p2 = event.target[3].value;
     setCheckPassword(p1===p2);
     event.preventDefault();
+    
+    if(p1===p2){
+      const dataResponce = await fetch(SummaryApi.signUp.url,{
+        method : SummaryApi.signUp.method,
+        headers : {
+          "content-type" : "application/json"
+        },
+        body : JSON.stringify(data)
+      })
+      const dataApi = dataResponce.json()
+      console.log("data",dataApi);
+    }
+    else{
+      console.log('password and confirm password is incorrect')
+    }
   }
 
   const handelOnClickShowPassword = () => {

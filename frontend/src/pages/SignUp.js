@@ -64,7 +64,7 @@ function SignUp() {
         },
         body : JSON.stringify(data)
       })
-      const dataApi = await dataResponce.json()
+      const dataApi = await dataResponce.json();
 
       if(dataApi.success){
         toast.success(dataApi.message);

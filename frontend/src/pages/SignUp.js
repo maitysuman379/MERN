@@ -1,13 +1,14 @@
 import React from 'react'
 import loginIcon from "../assest/signin.gif";
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import imageTobase64 from '../helpers/imageTobase64';
 import { FaCheckCircle } from "react-icons/fa";
 import { FaCircleXmark } from "react-icons/fa6";
 import SummaryApi from '../common';
+import { toast } from 'react-toastify';
 
 
 function SignUp() {
@@ -22,6 +23,8 @@ function SignUp() {
     confirmPassword: '',
     profilePic: '',
   });
+
+  const navigate = useNavigate()
 
   const handelUplodePic = async(event) =>{
     const file = event.target.files[0];
@@ -61,8 +64,15 @@ function SignUp() {
         },
         body : JSON.stringify(data)
       })
-      const dataApi = dataResponce.json()
-      console.log("data",dataApi);
+      const dataApi = await dataResponce.json()
+
+      if(dataApi.success){
+        toast.success(dataApi.message)
+        navigate('/login')
+      }
+      else{
+        toast.error(dataApi.message);
+      }
     }
     else{
       console.log('password and confirm password is incorrect')

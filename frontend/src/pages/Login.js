@@ -3,6 +3,8 @@ import loginIcon from "../assest/signin.gif";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import SummaryApi from "../common";
+import { toast } from 'react-toastify';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -21,9 +23,28 @@ const Login = () => {
     })
   };
 
-  const handelOnSubmit = (event) =>{
+  const handelOnSubmit = async(event) =>{
     event.preventDefault();
+    const dataResponce = await fetch(SummaryApi.signIn.url,{
+      method : SummaryApi.signIn.method,
+      headers : {
+        "content-type" : "application/json"
+      },
+      body : JSON.stringify(data)
+  })
+
+  const dataApi = await dataResponce.json()
+  console.log(dataApi)
+
+  if(dataApi.success){
+    toast.success(dataApi.message)
   }
+
+  if(dataApi.error){
+    toast.error(dataApi.message)
+  }
+
+}
 
   const handelOnClick = () => {
     setShowPassword(!showPassword);

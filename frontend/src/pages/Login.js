@@ -37,11 +37,11 @@ const Login = () => {
   console.log(dataApi)
 
   if(dataApi.success){
-    toast.success(dataApi.message);
+    toast.success(dataApi.message)
   }
 
   if(dataApi.error){
-    toast.error(dataApi.message);
+    toast.error(dataApi.message)
   }
 
 }

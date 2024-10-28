@@ -41,7 +41,7 @@ const Login = () => {
   }
 
   if(dataApi.error){
-    toast.error(dataApi.message)
+    toast.error(dataApi.message);
   }
 
 }
